@@ -9,10 +9,12 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
 
-    - name: Set up Python
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    - name: Setup Python
       uses: actions/setup-python@v2
       with:
         python-version: "3.9"
@@ -21,11 +23,19 @@ jobs:
       run: |
         pip install -r requirements.txt
 
-    - name: Run Unit Tests
+    - name: Run unit tests
       run: pytest tests/
 
-    - name: Train Model
+    - name: Train model
       run: python train.py
 
-    - name: Check Performance
+    - name: Check performance
       run: python check_performance.py
+
+  deploy:
+    needs: build-and-test      # chỉ chạy nếu build-and-test thành công
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Simulate Deployment
+      run: echo "🚀 Model passed checks. Simulated deployment step done!"
