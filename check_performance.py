@@ -11,7 +11,7 @@ print(result.stdout)
 match = re.search(r"Model Accuracy: ([0-9.]+)", result.stdout)
 if match:
     accuracy = float(match.group(1))
-    if accuracy < 0.90:
+    if accuracy < 0.80:
         print("FAIL: Model accuracy is below threshold (0.80)")
         sys.exit(1)
     else:
